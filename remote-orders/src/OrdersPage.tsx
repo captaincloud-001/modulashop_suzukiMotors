@@ -2,10 +2,9 @@ import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, gql, useQuery } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/',
+  uri: 'https://modulashop-graphql.vercel.app/',
   cache: new InMemoryCache(),
 });
-
 const GET_ORDERS = gql`
   query {
     orders {
