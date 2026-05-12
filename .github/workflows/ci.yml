@@ -11,13 +11,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-      - name: Install dependencies
+      - name: Install shell dependencies
         run: cd shell-app && npm install --legacy-peer-deps
       - name: Build shell app
         run: cd shell-app && npm run build
+        env:
+          CI: false
       - name: Run Lighthouse CI
-        run: |
-          npm install -g @lhci/cli serve
-          serve -s shell-app/build -p 3000 &
-          sleep 3
-          lhci autorun --collect.url=http://localhost:3000 --collect.numberOfRuns=1 --upload.target=temporary-public-storage
+        run: npx @lhci/cli@0.13.x autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
