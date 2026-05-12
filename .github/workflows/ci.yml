@@ -1,0 +1,19 @@
+name: Lighthouse CI
+
+on: [push]
+
+jobs:
+  lhci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: cd shell-app && npm install --legacy-peer-deps
+      - name: Build shell app
+        run: cd shell-app && npm run build
+      - name: Run Lighthouse CI
+        run: npx lhci autorun
