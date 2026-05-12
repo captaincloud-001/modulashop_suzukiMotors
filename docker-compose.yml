@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  graphql-server:
+    build: ./graphql-server
+    ports:
+      - "4000:4000"
+    networks:
+      - modulashop
+
+  remote-auth:
+    build: ./remote-auth
+    ports:
+      - "3001:3001"
+    networks:
+      - modulashop
+
+  remote-products:
+    build: ./remote-products
+    ports:
+      - "3002:3002"
+    depends_on:
+      - graphql-server
+    networks:
+      - modulashop
+
+  remote-orders:
+    build: ./remote-orders
+    ports:
+      - "3003:3003"
+    depends_on:
+      - graphql-server
+    networks:
+      - modulashop
+
+  shell-app:
+    build: ./shell-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - remote-auth
+      - remote-products
+      - remote-orders
+    networks:
+      - modulashop
+
+networks:
+  modulashop:
+    driver: bridge
