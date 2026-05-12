@@ -16,4 +16,8 @@ jobs:
       - name: Build shell app
         run: cd shell-app && npm run build
       - name: Run Lighthouse CI
-        run: npx lhci autorun
+        run: |
+          npm install -g @lhci/cli serve
+          serve -s shell-app/build -p 3000 &
+          sleep 3
+          lhci autorun --collect.url=http://localhost:3000 --collect.numberOfRuns=1 --upload.target=temporary-public-storage
