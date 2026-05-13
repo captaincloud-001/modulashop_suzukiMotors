@@ -3,7 +3,7 @@ const { ModuleFederationPlugin } = require('@module-federation/enhanced/webpack'
 module.exports = {
   webpack: {
     configure: (webpackConfig) => {
-      webpackConfig.output.publicPath = 'http://localhost:3001/';
+      webpackConfig.output.publicPath = 'https://modulashop-auth.vercel.app/';
       webpackConfig.plugins.push(
         new ModuleFederationPlugin({
           name: 'authApp',
@@ -20,7 +20,5 @@ module.exports = {
       return webpackConfig;
     },
   },
-  devServer: {
-    port: 3001,
-  },
+  devServer: { port: 3001 },
 };

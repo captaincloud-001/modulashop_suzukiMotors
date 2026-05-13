@@ -1,15 +1,14 @@
 import React, { Suspense, useState } from 'react';
 
-const AuthPage = React.lazy(() => import('authApp/AuthPage'));
-const ProductsPage = React.lazy(() => import('productsApp/ProductsPage'));
-const OrdersPage = React.lazy(() => import('ordersApp/OrdersPage'));
+const AuthPage = React.lazy(() => import('authApp/AuthPage').catch(() => ({ default: () => <div style={{padding:'2rem'}}>Auth module loading...</div> })));
+const ProductsPage = React.lazy(() => import('productsApp/ProductsPage').catch(() => ({ default: () => <div style={{padding:'2rem'}}>Products module loading...</div> })));
+const OrdersPage = React.lazy(() => import('ordersApp/OrdersPage').catch(() => ({ default: () => <div style={{padding:'2rem'}}>Orders module loading...</div> })));
 
 const App = () => {
   const [activePage, setActivePage] = useState('products');
 
   return (
     <div style={{ fontFamily: 'sans-serif' }}>
-      {/* Navigation */}
       <nav style={{
         background: '#1a1a2e',
         padding: '1rem 2rem',
@@ -38,13 +37,7 @@ const App = () => {
           </button>
         ))}
       </nav>
-
-      {/* Remote Modules Load Here */}
-      <Suspense fallback={
-        <div style={{ padding: '2rem', fontSize: '1.2rem' }}>
-          ⏳ Loading module...
-        </div>
-      }>
+      <Suspense fallback={<div style={{ padding: '2rem', fontSize: '1.2rem' }}>⏳ Loading module...</div>}>
         {activePage === 'auth' && <AuthPage />}
         {activePage === 'products' && <ProductsPage />}
         {activePage === 'orders' && <OrdersPage />}

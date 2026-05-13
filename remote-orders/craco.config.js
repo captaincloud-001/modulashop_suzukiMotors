@@ -3,7 +3,7 @@ const { ModuleFederationPlugin } = require('@module-federation/enhanced/webpack'
 module.exports = {
   webpack: {
     configure: (webpackConfig) => {
-      webpackConfig.output.publicPath = 'http://localhost:3003/';
+      webpackConfig.output.publicPath = 'https://modulashop-orders.vercel.app/';
       webpackConfig.plugins.push(
         new ModuleFederationPlugin({
           name: 'ordersApp',
@@ -20,7 +20,5 @@ module.exports = {
       return webpackConfig;
     },
   },
-  devServer: {
-    port: 3003,
-  },
+  devServer: { port: 3003 },
 };
